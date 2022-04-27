@@ -1,3 +1,6 @@
+const tailwind = require("preact-cli-tailwind");
+const preactCliSvgLoader = require("preact-cli-svg-loader");
+
 export default (config, env, helpers) => {
   config.plugins.push(
     new helpers.webpack.DefinePlugin({
@@ -6,11 +9,6 @@ export default (config, env, helpers) => {
       ),
     })
   );
-};
-
-const tailwind = require("preact-cli-tailwind");
-
-module.exports = (config, env, helpers) => {
-  config = tailwind(config, env, helpers);
-  return config;
+  preactCliSvgLoader(config, helpers);
+  tailwind(config, env, helpers);
 };

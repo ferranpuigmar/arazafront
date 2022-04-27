@@ -1,0 +1,22 @@
+.colorList {
+  display: flex;
+  @apply mb-5;
+}
+
+.colorsLabel {
+  @apply mb-3;
+}
+
+.colorListSelector {
+  @apply p-4 mr-2;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ebebeb;
+  cursor: pointer;
+}
+
+.colorActive {
+  border: 2px solid #000;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
+}

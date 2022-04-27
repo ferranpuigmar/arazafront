@@ -1,0 +1,39 @@
+.item {
+  border: 1px solid rgb(234, 230, 230);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  @apply shadow;
+  cursor: pointer;
+}
+
+.item a {
+  display: block;
+  text-decoration: none;
+}
+
+.itemImage {
+  height: 200px;
+  @apply p-4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemImage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.itemContent {
+  @apply p-4;
+}
+
+.itemContent h3 {
+  @apply m-0 text-black text-lg;
+}
+
+.itemContent p {
+  @apply m-0 text-black mt-2;
+}
