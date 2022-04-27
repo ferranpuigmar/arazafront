@@ -17,7 +17,7 @@ const Header = ({ breadcrumb }) => (
         </nav>
       </Wrapper>
     </header>
-    <Breadcrumb breadcrumb={breadcrumb} />
+    {breadcrumb && <Breadcrumb breadcrumb={breadcrumb} />}
   </div>
 );
 

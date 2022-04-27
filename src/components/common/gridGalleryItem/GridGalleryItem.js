@@ -1,4 +1,4 @@
-import { Link } from "preact-router";
+import { route } from "preact-router";
 import React from "react";
 import slugify from "react-slugify";
 import styles from "./GridGalleryStyle.css";
@@ -14,22 +14,20 @@ const GridGalleryItem = ({ id, url, model, brand }) => {
     return `/${generateSlug(model)}/${id}`;
   };
 
-  console.log("render...");
-
-  const path = generatePath(id, model);
+  const handleClickItem = () => {
+    const path = generatePath(id, model);
+    console.log("path: ", path);
+    route(path);
+  };
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={handleClickItem}>
       <div className={styles.itemImage}>
-        <Link href={path}>
-          <img src={url} alt={model} title={model} />
-        </Link>
+        <img src={url} alt={model} title={model} />
       </div>
       <div className={styles.itemContent}>
-        <Link href={path}>
-          <h3>{model}</h3>
-          <p>{brand}</p>
-        </Link>
+        <h3>{model}</h3>
+        <p>{brand}</p>
       </div>
     </div>
   );

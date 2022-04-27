@@ -10,5 +10,5 @@ export default (config, env, helpers) => {
     })
   );
   preactCliSvgLoader(config, helpers);
-  preactCliSvgLoader(config, helpers);
+  tailwind(config, env, helpers);
 };

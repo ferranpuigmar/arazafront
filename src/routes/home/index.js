@@ -1,18 +1,9 @@
-import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import GridGallery from "../../components/common/gridGallery/GridGallery";
 import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import Wrapper from "../../components/common/wrapper/Wrapper";
 import SearchBar from "../../components/home/searchBar/SearchBar";
 import style from "./style.css";
-
-const breadcrumb = [
-  {
-    title: "Detalle",
-    url: "",
-    currentPage: true,
-  },
-];
 
 const mockList = [
   {
@@ -23,9 +14,9 @@ const mockList = [
   },
   {
     id: "2",
-    url: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87424652/fee_786_587_png",
-    model: "Google Nest Hub",
-    brand: "Google",
+    url: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_89796404/fee_325_225_png",
+    model: "Altavoz inalámbrico - Sony SRSXB13B.CE7",
+    brand: "Sony",
   },
   {
     id: "3",
@@ -102,11 +93,10 @@ const Home = () => {
   }, [list]);
 
   return (
-    <BaseLayout breadcrumb={breadcrumb}>
+    <BaseLayout>
       <div className={style.home}>
         <Wrapper>
           <div className={style.header}>
-            <h1 className={style.title}>Home</h1>
             <SearchBar onSearch={handleSearch} />
           </div>
           {list.searchResults === 0 ? (
