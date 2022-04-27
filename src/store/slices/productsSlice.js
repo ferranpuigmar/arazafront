@@ -1,10 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import getProductsService from "../../services/getProductsService";
 
 const initialState = {
-  products: [],
-  loading: true,
+  productList: [],
+  loading: false,
   error: undefined,
 };
+
+export const fetchAllProducts = createAsyncThunk(
+  "product/fetchAllProducts",
+  async (dispatch, getState) => {
+    return await getProductsService();
+  }
+);
 
 const productsSlice = createSlice({
   name: "products",
@@ -13,6 +21,18 @@ const productsSlice = createSlice({
     getProducts: (state, actions) => {
       state.list = actions.payload;
       state.loading = false;
+    },
+  },
+  extraReducers: {
+    [fetchAllProducts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchAllProducts.fulfilled]: (state, action) => {
+      state.productList.push(...action.payload);
+      state.loading = false;
+    },
+    [fetchAllProducts.rejected]: (state, action) => {
+      state.error = action.payload;
     },
   },
 });

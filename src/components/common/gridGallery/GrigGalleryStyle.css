@@ -1,3 +1,8 @@
 .gridWrapper {
   @apply grid grid-cols-4 gap-8 mt-7;
 }
+
+.skeleton * {
+  height: 331px;
+  border-radius: 8px;
+}

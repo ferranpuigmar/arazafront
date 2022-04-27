@@ -13,6 +13,8 @@ const ColorSelector = ({ colors, onChange }) => {
     onChange(itemColor);
   };
 
+  if (!colors) return <></>;
+
   return (
     <div className={styles.colorsWrapper}>
       <p className={styles.colorsLabel}>Selecciona un color</p>

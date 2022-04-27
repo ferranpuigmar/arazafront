@@ -16,7 +16,6 @@ const GridGalleryItem = ({ id, url, model, brand }) => {
 
   const handleClickItem = () => {
     const path = generatePath(id, model);
-    console.log("path: ", path);
     route(path);
   };
 

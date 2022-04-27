@@ -1,6 +1,6 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 
-const client = axios.create({ baseURL: process.env.APP_API_BASE_URL });
+const client = axios.create({ baseURL: "http://localhost:3036" });
 
 client.interceptors.response.use(
   (response) => {
@@ -14,6 +14,7 @@ client.interceptors.response.use(
 const apiClient = () => {
   const headers = {
     "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   };
 
   const get = async (url) => {
