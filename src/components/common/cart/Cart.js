@@ -1,13 +1,20 @@
+import { useEffect } from "preact/hooks";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../../../store/slices/cartSlice/thunks/fetchCart";
 import cartStyles from "./cartStyles.css";
 
 const Cart = ({ width, height, fill }) => {
-  const cartState = useSelector((state) => state.cart);
+  const dipatch = useDispatch();
+  const cartCount = useSelector((state) => state.cart.count);
+
+  useEffect(() => {
+    dipatch(fetchCart());
+  }, []);
 
   return (
     <div className={cartStyles.wrapper}>
-      <span className={cartStyles.badget}>{cartState.count}</span>
+      <span className={cartStyles.badget}>{cartCount}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={width ?? "24"}

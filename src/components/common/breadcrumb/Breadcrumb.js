@@ -1,31 +1,46 @@
 import { Link } from "preact-router";
 import React from "react";
+import { useSelector } from "react-redux";
 import Wrapper from "../wrapper/Wrapper";
+import Skeleton from "../skeleton/Skeleton";
+import cx from "classnames";
 import style from "./breadcrumbStyle.css";
 
-const Breadcrumb = ({ breadcrumb }) => {
+const BreadcrumbSkeleton = () => {
+  return (
+    <div className={style.skeleton}>
+      <Skeleton />
+      <span className={style.breadcrumbSeparator}>/</span>
+      <Skeleton />
+    </div>
+  );
+};
+
+const Breadcrumb = ({ matches, path, url }) => {
+  const pathSplit = path.split("/");
+  const productId = pathSplit[pathSplit.length - 1];
+  const product = useSelector((state) =>
+    state.products.productList.find((product) => product.id === productId)
+  );
+
+  if (matches) return <></>;
+
   return (
     <Wrapper>
-      <ul className={style.breadcrumb}>
-        <li>
-          <Link className={style.breadcrumbAnchor} href="/">
-            Home
-          </Link>
-        </li>
-        {breadcrumb.map((link) => (
+      {product?.model ? (
+        <ul className={style.breadcrumb}>
           <li>
-            {link.url ? (
-              <Link className={style.breadcrumbAnchor} href={link.url}>
-                {link.title}
-              </Link>
-            ) : (
-              <span className={link.currentPage ? style.currentPage : ""}>
-                {link.title}
-              </span>
-            )}
+            <Link className={style.breadcrumbAnchor} href="/">
+              Home
+            </Link>
           </li>
-        ))}
-      </ul>
+          <li>
+            <span className={style.currentPage}>{product?.model}</span>
+          </li>
+        </ul>
+      ) : (
+        <BreadcrumbSkeleton />
+      )}
     </Wrapper>
   );
 };

@@ -4,7 +4,7 @@ import GridGallery from "../../components/common/gridGallery/GridGallery";
 import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import Wrapper from "../../components/common/wrapper/Wrapper";
 import SearchBar from "../../components/home/searchBar/SearchBar";
-import { fetchAllProducts } from "../../store/slices/productsSlice";
+import { fetchAllProducts } from "../../store/slices/productsSlice/thunks/fetchAllProducts";
 import style from "./style.css";
 
 const mockList = [
@@ -101,23 +101,21 @@ const Home = () => {
   }, []);
 
   return (
-    <BaseLayout>
-      <div className={style.home}>
-        <Wrapper>
-          <div className={style.header}>
-            <SearchBar onSearch={handleSearch} />
-          </div>
-          {list.searchResults === 0 ? (
-            <p>No hay resultados con esta búsqueda</p>
-          ) : (
-            <GridGallery
-              galleryList={list.searchList}
-              loading={productsState.loading}
-            />
-          )}
-        </Wrapper>
-      </div>
-    </BaseLayout>
+    <div className={style.home}>
+      <Wrapper>
+        <div className={style.header}>
+          <SearchBar onSearch={handleSearch} />
+        </div>
+        {list.searchResults === 0 ? (
+          <p>No hay resultados con esta búsqueda</p>
+        ) : (
+          <GridGallery
+            galleryList={list.searchList}
+            loading={productsState.loading}
+          />
+        )}
+      </Wrapper>
+    </div>
   );
 };
 

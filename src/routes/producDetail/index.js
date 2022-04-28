@@ -1,12 +1,14 @@
 import { useEffect, useState } from "preact/hooks";
 import { Col, Container, Row } from "react-grid-system";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import ColorSelector from "../../components/productDetail/colorSelector/ColorSelector";
 import DetailList from "../../components/productDetail/detailList/DetailList";
 import QuantitySelector from "../../components/productDetail/quantitySelector/QuantitySelector";
 import style from "./productDetailStyle.css";
 import { toast } from "react-toastify";
+import { fetchProductsById } from "../../store/slices/productsSlice/thunks/fetchProductById";
+import { fetchAddToCart } from "../../store/slices/cartSlice/thunks/fetchAddToCart";
 
 // const product = {
 //   id: 1,
@@ -42,6 +44,8 @@ import { toast } from "react-toastify";
 // };
 
 const ProductDetail = ({ id }) => {
+  const dispatch = useDispatch();
+  const cartError = useSelector((state) => state.error);
   const product = useSelector((state) =>
     state.products.productList.find((product) => product.id === id)
   );
@@ -57,7 +61,7 @@ const ProductDetail = ({ id }) => {
 
   const breadcrumb = [
     {
-      title: "Detalle",
+      title: product?.model,
       url: "",
       currentPage: true,
     },
@@ -75,10 +79,13 @@ const ProductDetail = ({ id }) => {
       toast.error("Tienes que seleccionar un color");
       return;
     }
+    dispatch(fetchAddToCart(addCartInfo));
   };
 
   useEffect(() => {
-    console.log("product: ", product);
+    if (!product) {
+      dispatch(fetchProductsById(id));
+    }
   }, [product]);
 
   useEffect(() => {
@@ -93,54 +100,52 @@ const ProductDetail = ({ id }) => {
   }, []);
 
   return (
-    <BaseLayout breadcrumb={breadcrumb}>
-      <Container>
-        <div className={style.productHeader}>
-          <span className={style.productBrand}>{product?.brand}</span>
-          <h1 className={style.productTitle}>{product?.model}</h1>
-        </div>
-        <Row>
-          <Col md={4}>
-            <div className={style.productImage}>
-              <img
-                src={product?.url}
-                alt={product?.model}
-                title={product?.model}
+    <Container>
+      <div className={style.productHeader}>
+        <span className={style.productBrand}>{product?.brand}</span>
+        <h1 className={style.productTitle}>{product?.model}</h1>
+      </div>
+      <Row>
+        <Col md={4}>
+          <div className={style.productImage}>
+            <img
+              src={product?.url}
+              alt={product?.model}
+              title={product?.model}
+            />
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className={style.productContent}>
+            {product?.description && (
+              <div className={style.productDescription}>
+                {product?.description}
+              </div>
+            )}
+            <div className={style.productDetails}>
+              <DetailList details={product} />
+            </div>
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className={style.productActions}>
+            <div className={style.productPrice}>EUR 245.56</div>
+            <div className={style.productColors}>
+              <ColorSelector
+                colors={product?.colors}
+                onChange={handleChangeColor}
               />
             </div>
-          </Col>
-          <Col md={4}>
-            <div className={style.productContent}>
-              {product?.description && (
-                <div className={style.productDescription}>
-                  {product?.description}
-                </div>
-              )}
-              <div className={style.productDetails}>
-                <DetailList details={product} />
-              </div>
+            <div className={style.productQuantity}>
+              <QuantitySelector
+                initialValue={addCartInfo.quantity}
+                onAddToCart={handleAddToCart}
+              />
             </div>
-          </Col>
-          <Col md={4}>
-            <div className={style.productActions}>
-              <div className={style.productPrice}>EUR 245.56</div>
-              <div className={style.productColors}>
-                <ColorSelector
-                  colors={product?.colors}
-                  onChange={handleChangeColor}
-                />
-              </div>
-              <div className={style.productQuantity}>
-                <QuantitySelector
-                  initialValue={addCartInfo.quantity}
-                  onAddToCart={handleAddToCart}
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </BaseLayout>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

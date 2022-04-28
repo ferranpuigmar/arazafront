@@ -11,7 +11,7 @@ const BaseLayout = ({ children, breadcrumb }) => {
       <div
         className={cx(styles.header, breadcrumb ? styles.withBreadcrumb : "")}
       >
-        <Header breadcrumb={breadcrumb} />
+        <Header />
         <main>{children}</main>
       </div>
       <ToastContainer
