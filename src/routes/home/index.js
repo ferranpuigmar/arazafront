@@ -1,8 +1,10 @@
 import { useEffect, useState } from "preact/hooks";
+import { useDispatch, useSelector } from "react-redux";
 import GridGallery from "../../components/common/gridGallery/GridGallery";
 import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import Wrapper from "../../components/common/wrapper/Wrapper";
 import SearchBar from "../../components/home/searchBar/SearchBar";
+import { fetchAllProducts } from "../../store/slices/productsSlice/thunks/fetchAllProducts";
 import style from "./style.css";
 
 const mockList = [
@@ -51,6 +53,9 @@ const mockList = [
 ];
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const productsState = useSelector((state) => state.products);
+
   const [list, setList] = useState({
     products: [],
     loading: false,
@@ -60,9 +65,9 @@ const Home = () => {
 
   const handleList = () => {
     setList({
-      products: mockList,
+      products: productsState.productList,
       loading: false,
-      searchList: mockList,
+      searchList: productsState.productList,
     });
   };
 
@@ -88,25 +93,29 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!list.products.length) handleList();
-    console.log(list);
-  }, [list]);
+    if (!list.products.length && productsState) handleList();
+  }, [list, productsState]);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
 
   return (
-    <BaseLayout>
-      <div className={style.home}>
-        <Wrapper>
-          <div className={style.header}>
-            <SearchBar onSearch={handleSearch} />
-          </div>
-          {list.searchResults === 0 ? (
-            <p>No hay resultados con esta búsqueda</p>
-          ) : (
-            <GridGallery galleryList={list.searchList} />
-          )}
-        </Wrapper>
-      </div>
-    </BaseLayout>
+    <div className={style.home}>
+      <Wrapper>
+        <div className={style.header}>
+          <SearchBar onSearch={handleSearch} />
+        </div>
+        {list.searchResults === 0 ? (
+          <p>No hay resultados con esta búsqueda</p>
+        ) : (
+          <GridGallery
+            galleryList={list.searchList}
+            loading={productsState.loading}
+          />
+        )}
+      </Wrapper>
+    </div>
   );
 };
 

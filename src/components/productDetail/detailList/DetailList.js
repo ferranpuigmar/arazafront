@@ -20,6 +20,8 @@ const ItemList = ({ name, value }) => {
 };
 
 const DetailList = ({ details }) => {
+  if (!details) return [];
+
   const list = [];
   for (let detail in details) {
     if (listKeys[detail] && details[detail] !== "") {

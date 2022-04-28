@@ -11,7 +11,6 @@ const SearchBar = ({ onSearch }) => {
   };
 
   useEffect(() => {
-    console.log("searchValue: ", searchValue);
     if (searchValue !== undefined) {
       onSearch(searchValue);
     }

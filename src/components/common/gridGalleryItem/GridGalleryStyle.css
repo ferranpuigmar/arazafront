@@ -5,6 +5,7 @@
   overflow: hidden;
   @apply shadow;
   cursor: pointer;
+  height: 331px;
 }
 
 .item a {

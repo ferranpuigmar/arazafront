@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchAllProductsCases } from "./thunks/fetchAllProducts";
+import { fetchProductByIdCases } from "./thunks/fetchProductById";
 
 const initialState = {
-  products: [],
-  loading: true,
+  productList: [],
+  loading: false,
   error: undefined,
 };
 
@@ -14,6 +16,10 @@ const productsSlice = createSlice({
       state.list = actions.payload;
       state.loading = false;
     },
+  },
+  extraReducers: {
+    ...fetchAllProductsCases,
+    ...fetchProductByIdCases,
   },
 });
 

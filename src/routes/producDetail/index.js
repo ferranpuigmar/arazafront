@@ -1,47 +1,55 @@
 import { useEffect, useState } from "preact/hooks";
 import { Col, Container, Row } from "react-grid-system";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import ColorSelector from "../../components/productDetail/colorSelector/ColorSelector";
 import DetailList from "../../components/productDetail/detailList/DetailList";
 import QuantitySelector from "../../components/productDetail/quantitySelector/QuantitySelector";
 import style from "./productDetailStyle.css";
 import { toast } from "react-toastify";
+import { fetchProductsById } from "../../store/slices/productsSlice/thunks/fetchProductById";
+import { fetchAddToCart } from "../../store/slices/cartSlice/thunks/fetchAddToCart";
 
-const product = {
-  id: 1,
-  brand: "Google",
-  model: "Google Nest Hub",
-  price: 250,
-  cpu: "CPU ARM QuadCore de 64 bits",
-  ram: "",
-  so: "Android, iOS",
-  resolution: "1024 x 600 píxeles",
-  battery: "",
-  size: {
-    width: "17.73",
-    height: "12.04",
-  },
-  weight: "0.558",
-  url: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87424652/fee_786_587_png",
-  colors: [
-    {
-      code: "#bcb8af",
-      name: "Tiza",
-    },
-    {
-      code: "#fff",
-      name: "White",
-    },
-    {
-      code: "#000",
-      name: "Black",
-    },
-  ],
-  description: "Música. Series. Control sencillo del hogar inteligente.",
-};
+// const product = {
+//   id: 1,
+//   brand: "Google",
+//   model: "Google Nest Hub",
+//   price: 250,
+//   cpu: "CPU ARM QuadCore de 64 bits",
+//   ram: "",
+//   so: "Android, iOS",
+//   resolution: "1024 x 600 píxeles",
+//   battery: "",
+//   size: {
+//     width: "17.73",
+//     height: "12.04",
+//   },
+//   weight: "0.558",
+//   url: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87424652/fee_786_587_png",
+//   colors: [
+//     {
+//       code: "#bcb8af",
+//       name: "Tiza",
+//     },
+//     {
+//       code: "#fff",
+//       name: "White",
+//     },
+//     {
+//       code: "#000",
+//       name: "Black",
+//     },
+//   ],
+//   description: "Música. Series. Control sencillo del hogar inteligente.",
+// };
 
 const ProductDetail = ({ id }) => {
+  const dispatch = useDispatch();
+  const cartError = useSelector((state) => state.error);
+  const product = useSelector((state) =>
+    state.products.productList.find((product) => product.id === id)
+  );
+
   const [addCartInfo, setAddCartInfo] = useState({
     id,
     color: {
@@ -53,7 +61,7 @@ const ProductDetail = ({ id }) => {
 
   const breadcrumb = [
     {
-      title: "Detalle",
+      title: product?.model,
       url: "",
       currentPage: true,
     },
@@ -71,11 +79,14 @@ const ProductDetail = ({ id }) => {
       toast.error("Tienes que seleccionar un color");
       return;
     }
-    console.log({
-      ...addCartInfo,
-      quantity: quantity,
-    });
+    dispatch(fetchAddToCart(addCartInfo));
   };
+
+  useEffect(() => {
+    if (!product) {
+      dispatch(fetchProductsById(id));
+    }
+  }, [product]);
 
   useEffect(() => {
     setAddCartInfo({
@@ -89,54 +100,52 @@ const ProductDetail = ({ id }) => {
   }, []);
 
   return (
-    <BaseLayout breadcrumb={breadcrumb}>
-      <Container>
-        <div className={style.productHeader}>
-          <span className={style.productBrand}>{product.brand}</span>
-          <h1 className={style.productTitle}>{product.model}</h1>
-        </div>
-        <Row>
-          <Col md={4}>
-            <div className={style.productImage}>
-              <img
-                src={product.url}
-                alt={product.model}
-                title={product.model}
+    <Container>
+      <div className={style.productHeader}>
+        <span className={style.productBrand}>{product?.brand}</span>
+        <h1 className={style.productTitle}>{product?.model}</h1>
+      </div>
+      <Row>
+        <Col md={4}>
+          <div className={style.productImage}>
+            <img
+              src={product?.url}
+              alt={product?.model}
+              title={product?.model}
+            />
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className={style.productContent}>
+            {product?.description && (
+              <div className={style.productDescription}>
+                {product?.description}
+              </div>
+            )}
+            <div className={style.productDetails}>
+              <DetailList details={product} />
+            </div>
+          </div>
+        </Col>
+        <Col md={4}>
+          <div className={style.productActions}>
+            <div className={style.productPrice}>EUR 245.56</div>
+            <div className={style.productColors}>
+              <ColorSelector
+                colors={product?.colors}
+                onChange={handleChangeColor}
               />
             </div>
-          </Col>
-          <Col md={4}>
-            <div className={style.productContent}>
-              {product.description && (
-                <div className={style.productDescription}>
-                  {product.description}
-                </div>
-              )}
-              <div className={style.productDetails}>
-                <DetailList details={product} />
-              </div>
+            <div className={style.productQuantity}>
+              <QuantitySelector
+                initialValue={addCartInfo.quantity}
+                onAddToCart={handleAddToCart}
+              />
             </div>
-          </Col>
-          <Col md={4}>
-            <div className={style.productActions}>
-              <div className={style.productPrice}>EUR 245.56</div>
-              <div className={style.productColors}>
-                <ColorSelector
-                  colors={product.colors}
-                  onChange={handleChangeColor}
-                />
-              </div>
-              <div className={style.productQuantity}>
-                <QuantitySelector
-                  initialValue={addCartInfo.quantity}
-                  onAddToCart={handleAddToCart}
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </BaseLayout>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

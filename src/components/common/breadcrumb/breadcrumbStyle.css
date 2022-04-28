@@ -26,3 +26,17 @@
   content: "";
   margin: 0;
 }
+
+.skeleton {
+  display: flex;
+  margin: 40px 0;
+}
+
+.skeleton span {
+  width: 64px;
+  margin-right: 5px;
+}
+
+.skeleton .breadcrumbSeparator {
+  width: auto;
+}
