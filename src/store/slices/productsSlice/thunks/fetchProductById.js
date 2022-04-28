@@ -3,8 +3,11 @@ import getProductByIdService from "../../../../services/getProductsService";
 
 export const fetchProductsById = createAsyncThunk(
   "product/fetchProductById",
-  async (id) => {
-    return await getProductByIdService(id);
+  async (id, { getState }) => {
+    const productState = getState().products;
+    if (isQueryDateExpired(productState)) {
+      return await getProductByIdService(id);
+    }
   }
 );
 

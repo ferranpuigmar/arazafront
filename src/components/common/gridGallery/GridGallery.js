@@ -26,9 +26,11 @@ const GridGallery = ({ galleryList, loading }) => {
 
   return (
     <div className={styles.gridWrapper}>
-      {galleryList.map((item) => (
-        <GridGalleryItem key={item.id} {...item} />
-      ))}
+      {galleryList ? (
+        galleryList?.map((item) => <GridGalleryItem key={item.id} {...item} />)
+      ) : (
+        <p>No hay listado</p>
+      )}
     </div>
   );
 };

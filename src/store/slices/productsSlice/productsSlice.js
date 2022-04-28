@@ -6,14 +6,19 @@ const initialState = {
   productList: [],
   loading: false,
   error: undefined,
+  queryExpiration: null,
 };
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    getProducts: (state, actions) => {
-      state.list = actions.payload;
+    getProducts: (state) => {
+      state.productList = state.productList;
+      state.loading = false;
+    },
+    getProductById: (state, actions) => {
+      state.productList = state.list.actions.payload;
       state.loading = false;
     },
   },
@@ -22,5 +27,7 @@ const productsSlice = createSlice({
     ...fetchProductByIdCases,
   },
 });
+
+export const { getProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

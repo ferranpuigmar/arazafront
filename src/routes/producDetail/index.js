@@ -79,7 +79,7 @@ const ProductDetail = ({ id }) => {
       toast.error("Tienes que seleccionar un color");
       return;
     }
-    dispatch(fetchAddToCart(addCartInfo));
+    dispatch(fetchAddToCart({ ...addCartInfo, quantity }));
   };
 
   useEffect(() => {
