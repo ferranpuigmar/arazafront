@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import getCartService from "../../../../services/getCart";
 import getProductByIdService from "../../../../services/getProductsService";
 
-export const fetchCart = createAsyncThunk("product/fetchCart", async () => {
+export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   return await getCartService();
 });
 

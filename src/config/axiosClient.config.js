@@ -18,6 +18,7 @@ const apiClient = () => {
   };
 
   const get = async (url) => {
+    console.log("url: ", url);
     const res = await client.get(url, { headers });
     return res.data;
   };

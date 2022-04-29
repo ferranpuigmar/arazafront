@@ -1,13 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import getProductByIdService from "../../../../services/getProductsService";
+import getProductByIdService from "../../../../services/getProductByIdService";
 
 export const fetchProductsById = createAsyncThunk(
   "product/fetchProductById",
   async (id, { getState }) => {
-    const productState = getState().products;
-    if (isQueryDateExpired(productState)) {
-      return await getProductByIdService(id);
-    }
+    //const productState = getState().products;
+    // if (!isQueryDateExpired(productState)) {
+    //   const matchedProduct = productState.productList.find(
+    //     (product) => product.id === id
+    //   );
+    //   console.log("matchedProduct: ", matchedProduct);
+    //   return fulfillWithValue(matchedProduct);
+    // }
+
+    return await getProductByIdService(id);
   }
 );
 
