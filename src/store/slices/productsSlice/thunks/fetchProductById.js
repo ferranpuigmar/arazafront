@@ -22,7 +22,7 @@ export const fetchProductByIdCases = {
     state.loading = true;
   },
   [fetchProductsById.fulfilled]: (state, action) => {
-    state.productList.push(...action.payload);
+    state.productList.push(action.payload);
     state.loading = false;
   },
   [fetchProductsById.rejected]: (state, action) => {

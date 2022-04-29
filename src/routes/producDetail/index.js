@@ -59,14 +59,6 @@ const ProductDetail = ({ id }) => {
     quantity: 0,
   });
 
-  const breadcrumb = [
-    {
-      title: product?.model,
-      url: "",
-      currentPage: true,
-    },
-  ];
-
   const handleChangeColor = (itemColor) => {
     setAddCartInfo({
       ...addCartInfo,
@@ -84,6 +76,7 @@ const ProductDetail = ({ id }) => {
 
   useEffect(() => {
     if (!product) {
+      console.log("no hay product...");
       dispatch(fetchProductsById(id));
     }
   }, [product]);
