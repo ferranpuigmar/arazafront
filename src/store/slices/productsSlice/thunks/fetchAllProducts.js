@@ -4,7 +4,6 @@ import {
   defineExpirationTime,
   isQueryDateExpired,
 } from "../../../../utils/checkExpiration";
-import { getProducts } from "../productsSlice";
 
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAllProducts",
