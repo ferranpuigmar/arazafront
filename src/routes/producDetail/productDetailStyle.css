@@ -24,7 +24,7 @@
 }
 
 .productActions {
-  @apply p-4 rounded-md;
+  @apply p-4 rounded-md mb-4 md:mb-0;
   border: 1px solid #ddd;
 }
 

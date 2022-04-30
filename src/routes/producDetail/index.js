@@ -98,7 +98,7 @@ const ProductDetail = ({ id }) => {
             )}
           </div>
         </Col>
-        <Col md={4} order={{ xs: 3, sm: 2 }}>
+        <Col md={4} order={{ xs: 3, md: 2 }}>
           <div className={style.productContent}>
             {product?.description && !loadingPage ? (
               <div className={style.productDescription}>
@@ -112,7 +112,7 @@ const ProductDetail = ({ id }) => {
             </div>
           </div>
         </Col>
-        <Col md={4} order={{ xs: 2, sm: 3 }}>
+        <Col md={4} order={{ xs: 2, md: 3 }}>
           <div className={style.productActions}>
             <div className={style.productPrice}>
               {loadingPage ? (
