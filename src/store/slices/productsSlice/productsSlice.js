@@ -6,7 +6,7 @@ const initialState = {
   productList: [],
   loading: false,
   error: undefined,
-  queryExpiration: null,
+  queryExpiration: undefined,
 };
 
 const productsSlice = createSlice({

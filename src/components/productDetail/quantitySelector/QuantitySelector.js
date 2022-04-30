@@ -1,7 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
+import Skeleton from "react-loading-skeleton";
 import styles from "./QuantitySelectorStyle.css";
 
-const QuantitySelector = ({ initialValue, onAddToCart }) => {
+const QuantitySelector = ({ initialValue, onAddToCart, loading }) => {
   const [value, setValue] = useState();
 
   const handleChange = (e) => {
@@ -16,6 +17,19 @@ const QuantitySelector = ({ initialValue, onAddToCart }) => {
   useEffect(() => {
     setValue(parseInt(initialValue));
   }, [initialValue]);
+
+  if (loading) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.quantitySelectorSkeleton}>
+          <Skeleton height={40} />
+        </div>
+        <div className={styles.buttonWrapperSkeleton}>
+          <Skeleton height={40} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>

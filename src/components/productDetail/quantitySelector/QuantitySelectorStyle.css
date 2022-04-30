@@ -4,6 +4,15 @@
   height: 40px;
 }
 
+.wrapper .quantitySelectorSkeleton {
+  width: 30%;
+}
+
+.wrapper .buttonWrapperSkeleton {
+  width: 60%;
+  margin-left: 15px;
+}
+
 .select {
   border: 1px solid #d0d0d0;
   padding: 8px;
