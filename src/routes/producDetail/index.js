@@ -9,46 +9,15 @@ import style from "./productDetailStyle.css";
 import { toast } from "react-toastify";
 import { fetchProductsById } from "../../store/slices/productsSlice/thunks/fetchProductById";
 import { fetchAddToCart } from "../../store/slices/cartSlice/thunks/fetchAddToCart";
-
-// const product = {
-//   id: 1,
-//   brand: "Google",
-//   model: "Google Nest Hub",
-//   price: 250,
-//   cpu: "CPU ARM QuadCore de 64 bits",
-//   ram: "",
-//   so: "Android, iOS",
-//   resolution: "1024 x 600 píxeles",
-//   battery: "",
-//   size: {
-//     width: "17.73",
-//     height: "12.04",
-//   },
-//   weight: "0.558",
-//   url: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87424652/fee_786_587_png",
-//   colors: [
-//     {
-//       code: "#bcb8af",
-//       name: "Tiza",
-//     },
-//     {
-//       code: "#fff",
-//       name: "White",
-//     },
-//     {
-//       code: "#000",
-//       name: "Black",
-//     },
-//   ],
-//   description: "Música. Series. Control sencillo del hogar inteligente.",
-// };
+import Skeleton from "react-loading-skeleton";
 
 const ProductDetail = ({ id }) => {
   const dispatch = useDispatch();
-  const cartError = useSelector((state) => state.error);
-  const product = useSelector((state) =>
-    state.products.productList.find((product) => product.id === id)
-  );
+  const { product, loading } = useSelector((state) => ({
+    product: state.products.productList.find((product) => product.id === id),
+    loading: state.loading,
+  }));
+  const [loadingPage, setLoadingPage] = useState(true);
 
   const [addCartInfo, setAddCartInfo] = useState({
     id,
@@ -58,14 +27,6 @@ const ProductDetail = ({ id }) => {
     },
     quantity: 0,
   });
-
-  const breadcrumb = [
-    {
-      title: product?.model,
-      url: "",
-      currentPage: true,
-    },
-  ];
 
   const handleChangeColor = (itemColor) => {
     setAddCartInfo({
@@ -79,7 +40,7 @@ const ProductDetail = ({ id }) => {
       toast.error("Tienes que seleccionar un color");
       return;
     }
-    dispatch(fetchAddToCart(addCartInfo));
+    dispatch(fetchAddToCart({ ...addCartInfo, quantity }));
   };
 
   useEffect(() => {
@@ -99,47 +60,79 @@ const ProductDetail = ({ id }) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (!loading && product) {
+      setLoadingPage(false);
+    }
+  }, [loading, product]);
+
   return (
     <Container>
       <div className={style.productHeader}>
-        <span className={style.productBrand}>{product?.brand}</span>
-        <h1 className={style.productTitle}>{product?.model}</h1>
+        <span className={style.productBrand}>
+          {loadingPage ? (
+            <Skeleton className={style.productBrandSkeleton} />
+          ) : (
+            product?.brand
+          )}
+        </span>
+        <h1 className={style.productTitle}>
+          {loadingPage ? (
+            <Skeleton className={style.productTitleSkeleton} />
+          ) : (
+            product?.model
+          )}
+        </h1>
       </div>
       <Row>
         <Col md={4}>
           <div className={style.productImage}>
-            <img
-              src={product?.url}
-              alt={product?.model}
-              title={product?.model}
-            />
+            {product?.url && !loadingPage ? (
+              <img
+                src={product?.url}
+                alt={product?.model}
+                title={product?.model}
+              />
+            ) : (
+              <Skeleton className={style.skeletonImage} />
+            )}
           </div>
         </Col>
-        <Col md={4}>
+        <Col md={4} order={{ xs: 3, md: 2 }}>
           <div className={style.productContent}>
-            {product?.description && (
+            {product?.description && !loadingPage ? (
               <div className={style.productDescription}>
                 {product?.description}
               </div>
+            ) : (
+              <Skeleton className={style.productDescription} count={3} />
             )}
             <div className={style.productDetails}>
-              <DetailList details={product} />
+              <DetailList details={product} loading={loadingPage} />
             </div>
           </div>
         </Col>
-        <Col md={4}>
+        <Col md={4} order={{ xs: 2, md: 3 }}>
           <div className={style.productActions}>
-            <div className={style.productPrice}>EUR 245.56</div>
+            <div className={style.productPrice}>
+              {loadingPage ? (
+                <Skeleton className={style.productPriceSkeleton} />
+              ) : (
+                `EUR ${product.price}`
+              )}
+            </div>
             <div className={style.productColors}>
               <ColorSelector
                 colors={product?.colors}
                 onChange={handleChangeColor}
+                loading={loadingPage}
               />
             </div>
             <div className={style.productQuantity}>
               <QuantitySelector
                 initialValue={addCartInfo.quantity}
                 onAddToCart={handleAddToCart}
+                loading={loadingPage}
               />
             </div>
           </div>

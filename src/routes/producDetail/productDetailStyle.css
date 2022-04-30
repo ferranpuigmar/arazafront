@@ -24,7 +24,7 @@
 }
 
 .productActions {
-  @apply p-4 rounded-md;
+  @apply p-4 rounded-md mb-4 md:mb-0;
   border: 1px solid #ddd;
 }
 
@@ -42,4 +42,20 @@
 
 .productBrand {
   @apply text-base m-0 text-green;
+}
+
+.skeletonImage {
+  height: 200px;
+}
+
+.productPriceSkeleton {
+  width: 100px;
+}
+
+.productBrandSkeleton {
+  width: 50px;
+}
+
+.productTitleSkeleton {
+  width: 150px;
 }

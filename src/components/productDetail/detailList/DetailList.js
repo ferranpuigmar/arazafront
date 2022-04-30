@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
 import styles from "./DetailListStyle.css";
 
 const listKeys = {
@@ -10,16 +11,26 @@ const listKeys = {
   weight: "Weight",
 };
 
-const ItemList = ({ name, value }) => {
+const ItemList = ({ name, value, loading }) => {
   return (
     <dl className={styles.detailListItem}>
-      <dt>{name}</dt>
-      <dd>{value}</dd>
+      <dt>{!loading ? name : <Skeleton width={50} height={20} />}</dt>
+      <dd>{!loading ? value : <Skeleton width={100} height={20} />}</dd>
     </dl>
   );
 };
 
-const DetailList = ({ details }) => {
+const DetailList = ({ details, loading }) => {
+  if (loading) {
+    return (
+      <>
+        <ItemList loading={loading} />
+        <ItemList loading={loading} />
+        <ItemList loading={loading} />
+      </>
+    );
+  }
+
   if (!details) return [];
 
   const list = [];
