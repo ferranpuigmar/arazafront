@@ -21,7 +21,6 @@ const ProductDetail = ({ id }) => {
   const [loadingPage, setLoadingPage] = useState(true);
 
   const [addCartInfo, setAddCartInfo] = useState({
-    quantity: 1,
     id,
     colorCode: "",
     storageCode: "",

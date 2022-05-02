@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import GridGallery from "../../components/common/gridGallery/GridGallery";
 import Wrapper from "../../components/common/wrapper/Wrapper";
+import GridGallery from "../../components/home/gridGallery/GridGallery";
 import SearchBar from "../../components/home/searchBar/SearchBar";
 import { fetchAllProducts } from "../../store/slices/productsSlice/thunks/fetchAllProducts";
 import style from "./style.css";
