@@ -3,6 +3,11 @@ import styles from "./ColorSelectorStyle.css";
 import cx from "classnames";
 import Skeleton from "react-loading-skeleton";
 
+const codeColorToHex = {
+  1000: "#000",
+  1001: "#fff",
+};
+
 const ColorListSelectorSkeleton = () => {
   return (
     <div className={styles.colorsWrapper}>
@@ -48,24 +53,16 @@ const ColorSelector = ({ colors, onChange, loading }) => {
     <div className={styles.colorsWrapper}>
       <p className={styles.colorsLabel}>Selecciona un color</p>
       <div className={styles.colorList}>
-        {!loading ? (
-          colors.map((itemColor) => (
-            <div
-              className={cx(
-                styles.colorListSelector,
-                itemColor.name === value.name ? styles.colorActive : ""
-              )}
-              style={{ backgroundColor: itemColor.code }}
-              onClick={() => handleSelectColor(itemColor)}
-            ></div>
-          ))
-        ) : (
-          <>
-            <ColorListSelectorSkeleton />
-            <ColorListSelectorSkeleton />
-            <ColorListSelectorSkeleton />
-          </>
-        )}
+        {colors.map((itemColor) => (
+          <div
+            className={cx(
+              styles.colorListSelector,
+              itemColor.name === value.name ? styles.colorActive : ""
+            )}
+            style={{ backgroundColor: codeColorToHex[itemColor.code] }}
+            onClick={() => handleSelectColor(itemColor)}
+          ></div>
+        ))}
       </div>
     </div>
   );

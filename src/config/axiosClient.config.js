@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const client = axios.create({ baseURL: "http://localhost:3036" });
+const client = axios.create({
+  baseURL: "https://front-test-api.herokuapp.com",
+});
 
 client.interceptors.response.use(
   (response) => {
@@ -14,11 +16,9 @@ client.interceptors.response.use(
 const apiClient = () => {
   const headers = {
     "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
   };
 
   const get = async (url) => {
-    console.log("url: ", url);
     const res = await client.get(url, { headers });
     return res.data;
   };

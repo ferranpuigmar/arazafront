@@ -1,7 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { Col, Container, Row } from "react-grid-system";
 import { useDispatch, useSelector } from "react-redux";
-import BaseLayout from "../../components/common/layout/baseLayout/BaseLayout";
 import ColorSelector from "../../components/productDetail/colorSelector/ColorSelector";
 import DetailList from "../../components/productDetail/detailList/DetailList";
 import QuantitySelector from "../../components/productDetail/quantitySelector/QuantitySelector";
@@ -10,37 +9,47 @@ import { toast } from "react-toastify";
 import { fetchProductsById } from "../../store/slices/productsSlice/thunks/fetchProductById";
 import { fetchAddToCart } from "../../store/slices/cartSlice/thunks/fetchAddToCart";
 import Skeleton from "react-loading-skeleton";
+import StorageSelector from "../../components/productDetail/storageSelector/StorageSelector";
 
 const ProductDetail = ({ id }) => {
   const dispatch = useDispatch();
   const { product, loading } = useSelector((state) => ({
-    product: state.products.productList.find((product) => product.id === id),
-    loading: state.loading,
+    product: state.products.product.data,
+    loading: state.products.loading,
   }));
+
   const [loadingPage, setLoadingPage] = useState(true);
 
   const [addCartInfo, setAddCartInfo] = useState({
+    quantity: 1,
     id,
-    color: {
-      name: "",
-      code: "",
-    },
-    quantity: 0,
+    colorCode: "",
+    storageCode: "",
   });
 
-  const handleChangeColor = (itemColor) => {
+  const handleChangeColor = (color) => {
     setAddCartInfo({
       ...addCartInfo,
-      color: itemColor,
+      colorCode: color.code,
+    });
+  };
+  const handleChangeStorage = (storage) => {
+    setAddCartInfo({
+      ...addCartInfo,
+      storageCode: storage.code,
     });
   };
 
   const handleAddToCart = (quantity) => {
-    if (addCartInfo.color.code === "") {
-      toast.error("Tienes que seleccionar un color");
+    if (addCartInfo.colodeCode === "") {
+      toast.error("You have to select a color");
       return;
     }
-    dispatch(fetchAddToCart({ ...addCartInfo, quantity }));
+    if (addCartInfo.storageCode === "") {
+      toast.error("You have to select a storage");
+      return;
+    }
+    dispatch(fetchAddToCart(addCartInfo));
   };
 
   useEffect(() => {
@@ -48,17 +57,6 @@ const ProductDetail = ({ id }) => {
       dispatch(fetchProductsById(id));
     }
   }, [product]);
-
-  useEffect(() => {
-    setAddCartInfo({
-      ...addCartInfo,
-      quantity: 1,
-      color: {
-        name: "",
-        code: "",
-      },
-    });
-  }, []);
 
   useEffect(() => {
     if (!loading && product) {
@@ -85,11 +83,11 @@ const ProductDetail = ({ id }) => {
         </h1>
       </div>
       <Row>
-        <Col md={4}>
+        <Col md={2}>
           <div className={style.productImage}>
-            {product?.url && !loadingPage ? (
+            {product?.imgUrl && !loadingPage ? (
               <img
-                src={product?.url}
+                src={product?.imgUrl}
                 alt={product?.model}
                 title={product?.model}
               />
@@ -98,15 +96,8 @@ const ProductDetail = ({ id }) => {
             )}
           </div>
         </Col>
-        <Col md={4} order={{ xs: 3, md: 2 }}>
+        <Col md={6} order={{ xs: 3, md: 2 }}>
           <div className={style.productContent}>
-            {product?.description && !loadingPage ? (
-              <div className={style.productDescription}>
-                {product?.description}
-              </div>
-            ) : (
-              <Skeleton className={style.productDescription} count={3} />
-            )}
             <div className={style.productDetails}>
               <DetailList details={product} loading={loadingPage} />
             </div>
@@ -123,17 +114,26 @@ const ProductDetail = ({ id }) => {
             </div>
             <div className={style.productColors}>
               <ColorSelector
-                colors={product?.colors}
+                colors={product?.options?.colors}
                 onChange={handleChangeColor}
                 loading={loadingPage}
               />
             </div>
-            <div className={style.productQuantity}>
-              <QuantitySelector
-                initialValue={addCartInfo.quantity}
-                onAddToCart={handleAddToCart}
+            <div className={style.productStorage}>
+              <StorageSelector
+                storages={product?.options?.storages}
+                onChange={handleChangeStorage}
                 loading={loadingPage}
               />
+            </div>
+            <div className={style.productQuantity}>
+              <button
+                className={style.addToCartButton}
+                type="button"
+                onClick={handleAddToCart}
+              >
+                Añadir al carrito
+              </button>
             </div>
           </div>
         </Col>

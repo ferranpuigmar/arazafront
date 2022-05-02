@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAddToCartCases } from "./thunks/fetchAddToCart";
-import { fetchCartCases } from "./thunks/fetchCart";
 
 const initialState = {
   count: 0,
@@ -14,7 +13,6 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: {
     ...fetchAddToCartCases,
-    ...fetchCartCases,
   },
 });
 

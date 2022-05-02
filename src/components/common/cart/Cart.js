@@ -1,16 +1,10 @@
-import { useEffect } from "preact/hooks";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from "../../../store/slices/cartSlice/thunks/fetchCart";
+import { useSelector } from "react-redux";
+
 import cartStyles from "./cartStyles.css";
 
-const Cart = ({ width, height, fill }) => {
-  const dipatch = useDispatch();
+const Cart = ({ width, height }) => {
   const cartCount = useSelector((state) => state.cart.count);
-
-  useEffect(() => {
-    dipatch(fetchCart());
-  }, []);
 
   return (
     <div className={cartStyles.wrapper}>

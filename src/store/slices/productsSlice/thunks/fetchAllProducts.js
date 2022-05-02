@@ -8,9 +8,9 @@ import {
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAllProducts",
   async (_, { getState, fulfillWithValue }) => {
-    const productState = getState().products;
+    const productState = getState().products.productList.list;
     if (!isQueryDateExpired(productState)) {
-      return fulfillWithValue(productState.productList);
+      return fulfillWithValue(productState.productList.list);
     }
 
     return await getProductsService();
@@ -22,10 +22,10 @@ export const fetchAllProductsCases = {
     state.loading = true;
   },
   [fetchAllProducts.fulfilled]: (state, action) => {
-    state.productList = [];
-    state.productList.push(...action.payload);
+    state.productList.list = [];
+    state.productList.list.push(...action.payload);
     state.loading = false;
-    state.queryExpiration = defineExpirationTime();
+    state.productList.queryExpiration = defineExpirationTime();
   },
   [fetchAllProducts.rejected]: (state, action) => {
     state.error = action.payload;

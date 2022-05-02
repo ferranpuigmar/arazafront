@@ -19,9 +19,9 @@ const Home = () => {
 
   const handleList = () => {
     setList({
-      products: productsState.productList,
+      products: productsState.productList.list,
       loading: false,
-      searchList: productsState.productList,
+      searchList: productsState.productList.list,
     });
   };
 
@@ -53,10 +53,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, []);
-
-  useEffect(() => {
-    console.log("productsState: ", productsState);
-  }, [productsState]);
 
   return (
     <div className={style.home}>

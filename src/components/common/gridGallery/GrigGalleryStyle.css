@@ -1,5 +1,17 @@
 .gridWrapper {
-  @apply grid grid-cols-4 gap-8 mt-7;
+  @apply grid grid-cols-1 gap-8 mt-7;
+}
+
+@screen md {
+  .gridWrapper {
+    @apply grid-cols-3;
+  }
+}
+
+@screen lg {
+  .gridWrapper {
+    @apply grid-cols-4;
+  }
 }
 
 .skeleton * {
