@@ -7,15 +7,7 @@ import {
 
 export const fetchProductsById = createAsyncThunk(
   "product/fetchProductById",
-  async (id, { getState }) => {
-    const productListState = getState().products.productList;
-    if (!isQueryDateExpired(productListState)) {
-      const matchedProduct = productListState.list.find(
-        (product) => product.id === id
-      );
-      return fulfillWithValue(matchedProduct);
-    }
-
+  async (id) => {
     return await getProductByIdService(id);
   }
 );

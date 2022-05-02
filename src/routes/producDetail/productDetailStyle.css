@@ -14,7 +14,9 @@
 
 .productImage {
   width: 100%;
-  @apply pr-6;
+  display: flex;
+  justify-content: center;
+  @apply mb-6;
 }
 
 .productImage img {

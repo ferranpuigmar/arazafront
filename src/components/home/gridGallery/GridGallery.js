@@ -1,6 +1,6 @@
 import React from "react";
 import GridGalleryItem from "../gridGalleryItem/GridGalleryItem";
-import Skeleton from "../skeleton/Skeleton";
+import Skeleton from "../../common/skeleton/Skeleton";
 import cx from "classnames";
 import styles from "./GrigGalleryStyle.css";
 
