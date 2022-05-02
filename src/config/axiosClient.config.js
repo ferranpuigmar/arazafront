@@ -1,6 +1,8 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 
-const client = axios.create({ baseURL: process.env.APP_API_BASE_URL });
+const client = axios.create({
+  baseURL: "https://front-test-api.herokuapp.com",
+});
 
 client.interceptors.response.use(
   (response) => {

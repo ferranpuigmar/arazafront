@@ -1,0 +1,42 @@
+.breadcrumb {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+.breadcrumb li {
+  @apply mr-2 text-sm;
+}
+
+.breadcrumbAnchor {
+  text-decoration: none;
+}
+
+.currentPage {
+  @apply font-medium;
+}
+
+.breadcrumb li:before {
+  content: "/";
+  @apply mr-2 text-sm;
+}
+
+.breadcrumb li:first-child::before {
+  content: "";
+  margin: 0;
+}
+
+.skeleton {
+  display: flex;
+  margin: 40px 0;
+}
+
+.skeleton span {
+  width: 64px;
+  margin-right: 5px;
+}
+
+.skeleton .breadcrumbSeparator {
+  width: auto;
+}

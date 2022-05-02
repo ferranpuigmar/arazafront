@@ -5,18 +5,27 @@ import store from "../../store/store";
 
 // Code-splitting is automated for `routes` directory
 import Home from "../../routes/home";
-import Profile from "../../routes/profile";
-import Header from "../common/header";
+import ProductDetail from "../../routes/producDetail";
+import { ScreenClassProvider, setConfiguration } from "react-grid-system";
+import breakpoints from "../../config/breakpoints.config";
+import { getBreakpoints } from "../../utils/breakpoints";
+import BaseLayout from "../common/layout/baseLayout/BaseLayout";
+
+setConfiguration({
+  breakpoints: getBreakpoints(breakpoints),
+});
 
 const App = () => (
   <Provider store={store}>
     <div id="app">
-      <Header />
-      <Router>
-        <Home path="/" />
-        <Profile path="/profile/" user="me" />
-        <Profile path="/profile/:user" />
-      </Router>
+      <ScreenClassProvider>
+        <BaseLayout>
+          <Router>
+            <Home path="/" />
+            <ProductDetail path="/:slug/:id" />
+          </Router>{" "}
+        </BaseLayout>
+      </ScreenClassProvider>
     </div>
   </Provider>
 );

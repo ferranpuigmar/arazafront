@@ -1,0 +1,24 @@
+.storageList {
+  display: flex;
+  @apply mb-5;
+}
+
+.storageLabel {
+  @apply mb-3;
+}
+
+.storageListSelector {
+  @apply p-4 mr-2;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border: 1px solid #ebebeb;
+  cursor: pointer;
+}
+
+.storageActive {
+  border: 2px solid #000;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
+}

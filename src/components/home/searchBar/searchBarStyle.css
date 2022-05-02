@@ -1,0 +1,16 @@
+.searchBar {
+  width: 100%;
+  max-width: 100%;
+}
+@screen md {
+  .searchBar {
+    max-width: 40%;
+    margin-left: auto;
+  }
+}
+
+.input {
+  height: 40px;
+  width: 100%;
+  @apply p-4 text-base;
+}

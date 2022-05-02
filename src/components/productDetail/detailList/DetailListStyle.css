@@ -1,0 +1,23 @@
+.detailListItem {
+  border-bottom: 1px solid #ebebeb;
+  padding: 0 0 10px;
+  margin: 0 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailListItem dt,
+.detailListItem dd {
+  margin: 0;
+  padding: 0;
+  @apply text-sm;
+}
+
+.detailListItem dt {
+  @apply font-medium;
+  padding-right: 10px;
+}
+
+.detailListItem dd {
+  text-align: right;
+}

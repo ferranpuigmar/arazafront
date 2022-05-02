@@ -1,5 +1,14 @@
 .home {
-  padding: 56px 20px;
   min-height: 100%;
   width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  @apply text-4xl my-1;
 }

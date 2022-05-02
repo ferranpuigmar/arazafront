@@ -1,0 +1,15 @@
+.wrapper {
+  position: relative;
+}
+
+.badget {
+  position: absolute;
+  @apply px-2 rounded-full bg-yellow text-xs;
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  transform: translateX(5px);
+}
