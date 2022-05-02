@@ -3,7 +3,7 @@ import React from "react";
 import slugify from "react-slugify";
 import styles from "./GridGalleryStyle.css";
 
-const GridGalleryItem = ({ id, url, model, brand }) => {
+const GridGalleryItem = ({ id, imgUrl, model, brand }) => {
   const generateSlug = (model) => {
     if (!model) return;
     return slugify(model);
@@ -22,7 +22,7 @@ const GridGalleryItem = ({ id, url, model, brand }) => {
   return (
     <div className={styles.item} onClick={handleClickItem}>
       <div className={styles.itemImage}>
-        <img src={url} alt={model} title={model} />
+        <img src={imgUrl} alt={model} title={model} />
       </div>
       <div className={styles.itemContent}>
         <h3>{model}</h3>

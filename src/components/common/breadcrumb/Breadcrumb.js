@@ -17,12 +17,7 @@ const BreadcrumbSkeleton = () => {
 };
 
 const Breadcrumb = ({ matches, path, url }) => {
-  const pathSplit = path.split("/");
-  const productId = pathSplit[pathSplit.length - 1];
-  const product = useSelector((state) =>
-    state.products.productList.find((product) => product.id === productId)
-  );
-
+  const product = useSelector((state) => state.products.product.data);
   if (matches) return <></>;
 
   return (

@@ -3,7 +3,14 @@ import { fetchAllProductsCases } from "./thunks/fetchAllProducts";
 import { fetchProductByIdCases } from "./thunks/fetchProductById";
 
 const initialState = {
-  productList: [],
+  productList: {
+    list: [],
+    queryExpiration: undefined,
+  },
+  product: {
+    data: null,
+    queryExpiration: undefined,
+  },
   loading: false,
   error: undefined,
   queryExpiration: undefined,
@@ -18,7 +25,7 @@ const productsSlice = createSlice({
       state.loading = false;
     },
     getProductById: (state, actions) => {
-      state.productList = state.list.actions.payload;
+      state.product = actions[0];
       state.loading = false;
     },
   },

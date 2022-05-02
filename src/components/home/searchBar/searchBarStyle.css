@@ -1,6 +1,12 @@
 .searchBar {
   width: 100%;
-  max-width: 40%;
+  max-width: 100%;
+}
+@screen md {
+  .searchBar {
+    max-width: 40%;
+    margin-left: auto;
+  }
 }
 
 .input {
